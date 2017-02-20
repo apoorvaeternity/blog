@@ -1,0 +1,40 @@
+{% load crispy_forms_tags %}
+{% load humanize %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Blog</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="well" style="margin: 0% 10% 10% 10%;">
+    <h2 class="text-center" style="letter-spacing: 6px; font-weight: bolder; padding-bottom: 3vh;">BLOG POSTS</h2>
+    {% for blog in context %}
+        <div class="well panel panel-default" style="background-color: white; box-shadow: 2px 2px 16px 0px rgba(0,0,0,0.4); padding: 5vh 8vw;
+">
+            <div class="panel-heading" style="background-color: white;"><h4 style="font-weight: bold;">{{ blog.title }}</h4>
+        <h5 style="color: #999;">{{ blog.timestamp|naturaltime }}</h5>
+        <h5>Author-{{blog.name}}</h5>
+                </div>
+            <div class="panel-body" style="text-align:justify; padding: 2vh 3vw;"><h5>{{ blog.post }}</h5></div>
+        </div>
+
+    {% endfor %}
+
+<div style="padding: 5% 50% 0% 0% ; >
+    <form action="{% url 'home:blog_page' %}" method="post" style="background-color: white; padding: 4vh 2vw; box-shadow: 2px 2px 16px 0px rgba(0,0,0,0.3);">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <input type="submit" class="btn btn-primary btn-block" value="Submit" />
+    </form>
+</div>
+</div>
+</body>
+</html>
